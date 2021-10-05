@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OptimLR1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Решение СЛАУ"
+        Background="DimGray" 
+        VerticalAlignment="Stretch" 
+        HorizontalAlignment="Stretch">
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="n = " VerticalAlignment="Center" FontSize="16" Margin="0,0,0,4"/>
+                <TextBox Width="30" Margin="5" MaxLength="3" Text="{Binding RowsCount, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text=" m = " VerticalAlignment="Center" FontSize="16" Margin="0,0,0,4"/>
+                <TextBox Width="30" Margin="5" MaxLength="3" Text="{Binding ColumnsCount, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Применить" Margin="5" Command="{Binding SetSizeCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <DataGrid Name="Data_A" Margin="5" Grid.Column="1" ItemsSource="{Binding Data}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                    <DataGrid.RowHeaderTemplate>
+                        <ItemContainerTemplate>
+                            <TextBlock Text="{Binding AlternationIndex,RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+                        </ItemContainerTemplate>
+                    </DataGrid.RowHeaderTemplate>
+                </DataGrid>
+                <TextBlock FontSize="42" VerticalAlignment="Center">× X = </TextBlock>
+                <DataGrid Name="Data_B" Margin="5" Grid.Column="1" ItemsSource="{Binding Datab}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
+                    <DataGrid.RowHeaderTemplate>
+                        <ItemContainerTemplate>
+                            <TextBlock Text="{Binding AlternationIndex,RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+                        </ItemContainerTemplate>
+                    </DataGrid.RowHeaderTemplate>
+                </DataGrid>
+            </StackPanel>
+            <Button x:Name="ButtonCalculate" Height="30" Margin="10" Content="Найти решение СЛАУ (вектор X)" FontSize="20" Click="ButtonCalculate_Click"/>
+            <StackPanel Orientation="Horizontal">
+                
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

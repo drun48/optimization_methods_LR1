@@ -1,0 +1,17 @@
+﻿<Window x:Class="OptimLR1.WindowInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OptimLR1"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Ввод данных" Height="200" Width="300" Background="DimGray" MinWidth="300" MinHeight="200" MaxWidth="300" MaxHeight="200">
+    <Grid Width="292">
+        <TextBlock Margin="20,49,237,93" FontSize="18">N =</TextBlock>
+        <TextBlock Margin="154,49,95,93" FontSize="18">M =</TextBlock>
+        <TextBox Name="txt_N" Margin="60,40,172,93" FontSize="20"/>
+        <TextBox Name="txt_M" Margin="197,40,36,93" FontSize="20"/>
+        <Button Name="ok" Margin="100,110,100,20" FontSize="20" Click="ok_Click">Ок</Button>
+    </Grid>
+</Window>
