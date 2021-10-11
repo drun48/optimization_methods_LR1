@@ -14,8 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
-using OptimLR1.components;
-
 namespace OptimLR1
 {
     /// <summary>
@@ -26,44 +24,42 @@ namespace OptimLR1
         public MainWindow()
         {
             InitializeComponent();
-            MyMatrix A = new MyMatrix(3, 5);
-            MyMatrix B = new MyMatrix(5, 6);
-
-            for(int i = 0; i < 3; ++i)
-            {
-                for(int j = 0;  j <5; ++j)
-                {
-                    A[i, j] = j;
-                }
-            }
-
-            for (int i = 0; i < 5; ++i)
-            {
-                for (int j = 0; j < 6; ++j)
-                {
-                    B[i, j] = j;
-                }
-            }
-
-            MyMatrix C = A * B;
-
+            
             Matrix<double> K = DenseMatrix.OfArray(new double[,] {
             {2, 5, 7, 10, 0, 0},
             {0, 9, 2, 2, 1, 3},
             {8, 1, 3, 0, 0, 6},
             { 0, 3, -6, 7, 5, -6} });
+            Matrix<double> L = DenseMatrix.OfArray(new double[,] {
+            { 1, -5, -2, 9, 2, -7 },{-2, 0, 1, 4, -6, 3 },{4, 5, -1, -1, 0, 1 },{5, -3, -6, -3, -2, 3 } });
             var I = Matrix<double>.Build;
             var c = I.DenseDiagonal(K.ColumnCount, K.ColumnCount, 1);
-            Grevil(K);
-        }   
+            var k = Grevil(K);
+            if ((K*k).Transpose() == K*k)
+            {
+                Console.WriteLine(1);
+            }
+            if((k*K).Transpose() == k * K)
+            {
+                Console.WriteLine(2);
+            }
+            if(K*k*K == K)
+            {
+                Console.WriteLine(3);
+            }
+            if (k*K*k == k)
+            {
+                Console.WriteLine(4);
+            }
+        }  
         
        public Matrix<double> Grevil(Matrix<double> A)
         {
             var matrix = Matrix<double>.Build;
-            var I = matrix.DenseDiagonal(A.ColumnCount, A.ColumnCount, 1);
+            var I = matrix.DenseDiagonal(A.RowCount, A.RowCount, 1);
             var a = column(A, 0);
             var a_transp = a.Transpose();
-            var A_obr = matrix.Dense(A.ColumnCount, A.RowCount);
+            var A_obr = matrix.Dense(1, A.RowCount);
             if (!any(a))
             {
                 for(int i = 0; i < A_obr.ColumnCount; ++i)
@@ -84,7 +80,7 @@ namespace OptimLR1
             {
                 a = column(A, k);
                 a_transp = a.Transpose();
-                var  C = srez_col(A, 0, k) * srez_col(A_obr, 0, k, true);
+                var  C = a - srez_col(A, 0, k) * A_obr *a;
                 var f = matrix.Dense(1, A_obr.ColumnCount);
                 if (any(C))
                 {
@@ -96,13 +92,15 @@ namespace OptimLR1
                 }
                 else
                 {
-                    var d_k = 1 + square(A_obr * a);
-                    f = a_transp * A_obr.Transpose() * A_obr / d_k[0, 0];
+                    //double d_k = 1 + ((A_obr * a).Transpose() * (A_obr * a))[0,0];
+                    double d_k = 1 + sum(square(A_obr * a));
+                    //double d_k_c = 1 + sum(A_obr.Transpose()*a);
+                    f = a_transp * A_obr.Transpose() * A_obr / d_k;
                 }
-                for(int i = 0; i < A_obr.ColumnCount; ++i)
-                {
-                    A_obr[k, i] = f[0, i];
-                }
+                A_obr = A_obr * (I - a * f);
+                Vector<double> f_row = f.Row(0);
+                A_obr = A_obr.InsertRow(k, f_row);
+
             }
             return A_obr;
         }
@@ -113,7 +111,7 @@ namespace OptimLR1
             {
                 for(int j = 0; j < C.ColumnCount; ++j)
                 {
-                    if (C[i, j] != 0)
+                    if (Math.Abs(C[i, j]) >= 1e-9)
                     {
                         return true;
                     }
@@ -131,16 +129,12 @@ namespace OptimLR1
             }
             return column;
         }
-        public Matrix<double> srez_col(Matrix<double> A, int start, int end, bool flag =false)
+        public Matrix<double> srez_col(Matrix<double> A, int start, int end)
         {
             var matrix = Matrix<double>.Build;
-            int row = 0;
-            if (flag)
-                row = end;
-            else
-                row = A.RowCount;
+            int row = A.RowCount;
             var srez = matrix.Dense(row, end-start, 0);
-            for(int i = 0; i < end; ++i)
+            for(int i = 0; i < row; ++i)
             {
                 for(int j = 0; j < end-start; ++j)
                 {
@@ -161,5 +155,18 @@ namespace OptimLR1
             }
             return A;
         }
+        public double sum(Matrix<double> A)
+        {
+            double sum = 0;
+            for(int i = 0; i < A.RowCount; ++i)
+            {
+                for(int j = 0; j < A.ColumnCount; ++j)
+                {
+                    sum += A[i, j];
+                }
+            }
+            return sum;
+        }
     }
 }
+
