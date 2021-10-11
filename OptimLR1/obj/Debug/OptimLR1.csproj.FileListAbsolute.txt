@@ -18,3 +18,23 @@ C:\Users\Егор\Source\Repos\optimization_methods_LR1\OptimLR1\obj\Debug\Optim
 C:\Users\Егор\Source\Repos\optimization_methods_LR1\OptimLR1\obj\Debug\UserControl_Cell.g.cs
 C:\Users\Егор\Source\Repos\optimization_methods_LR1\OptimLR1\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Егор\Source\Repos\optimization_methods_LR1\OptimLR1\obj\Debug\UserControl_Cell.baml
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\bin\Debug\OptimLR1.exe.config
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\bin\Debug\OptimLR1.exe
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\bin\Debug\OptimLR1.pdb
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.csprojAssemblyReference.cache
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\MainWindow.g.cs
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\UserControl_Cell.g.cs
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\WindowInput.g.cs
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\App.g.cs
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1_MarkupCompile.cache
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1_MarkupCompile.lref
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\MainWindow.baml
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\UserControl_Cell.baml
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\WindowInput.baml
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.g.resources
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.Properties.Resources.resources
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.csproj.GenerateResource.cache
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.csproj.CoreCompileInputs.cache
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.exe
+C:\Users\kobze\source\repos\Новая папка\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1.pdb
