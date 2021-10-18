@@ -40,12 +40,9 @@
             </StackPanel>
             <Button x:Name="ButtonCalculate" Height="30" Margin="10" Content="Найти решение СЛАУ (вектор X)" FontSize="20" Click="ButtonCalculate_Click"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Name="txtbl2" FontSize="42" VerticalAlignment="Center" HorizontalAlignment="Center">X = </TextBlock>
-                <ListView Name="Data_Psvd" ItemsSource="{Binding ItemSource_Psvd}" Height="80" Width="80">
-                    <ListView.View>
-                        <GridView  x:Name="GridWiew1"/>
-                    </ListView.View>
-                </ListView>
+                <TextBlock Name="txtbl2" FontSize="42" VerticalAlignment="Center" HorizontalAlignment="Center">X =</TextBlock>
+                <StackPanel Orientation="Vertical" Name="Table" Margin="15px" HorizontalAlignment="Center">
+                </StackPanel>
             </StackPanel>
                 <TextBlock Name="txtbl3" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Норма невязки:</TextBlock>
         </StackPanel>

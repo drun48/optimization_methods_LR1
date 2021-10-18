@@ -63,7 +63,7 @@ namespace OptimLR1
             //}
             Data_A.Visibility = Visibility.Hidden;
             Data_B.Visibility = Visibility.Hidden;
-            Data_Psvd.Visibility = Visibility.Hidden;
+            //Data_Psvd.Visibility = Visibility.Hidden;
             txtbl1.Visibility = Visibility.Hidden;
             txtbl2.Visibility = Visibility.Hidden;
             txtbl3.Visibility = Visibility.Hidden;
@@ -238,12 +238,11 @@ namespace OptimLR1
             //Data_Psvd.ItemsSource = coll_res;
             //Data_Psvd.ItemsSource = coll_res;
             //mainviewmodel.gridView = gridView;
-            GridWiew1 = gridView;
+            //GridWiew1 = gridView;
         }
 
         private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
         {
-            Data_Psvd.Visibility = Visibility.Visible;
             txtbl2.Visibility = Visibility.Visible;
             txtbl3.Visibility = Visibility.Visible;
 
@@ -254,6 +253,19 @@ namespace OptimLR1
             Table_X = Table_psevdo * Table_B;
             Table_BB = Table_A * Table_X;
             Nevyazka = sum(square(Table_B - Table_BB));
+
+            for (int i = 0; i < Table_X.RowCount; ++i)
+            {
+                StackPanel stack = new StackPanel();
+                stack.Orientation = Orientation.Horizontal;
+                for(int j = 0; j < Table_X.ColumnCount; ++j)
+                {
+                    TextBlock text = new TextBlock();
+                    text.Text = Table_X[i, j].ToString();
+                    stack.Children.Add(text);
+                }
+                this.Table.Children.Add(stack);
+            }
 
             AddDataToLW(Table_X);
             txtbl3.Text += " " + Nevyazka.ToString();
