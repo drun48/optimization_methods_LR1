@@ -6,20 +6,20 @@
         xmlns:local="clr-namespace:OptimLR1"
         mc:Ignorable="d"
         Title="Решение СЛАУ"
-        Background="DimGray" 
+        Background="LightGray" 
         VerticalAlignment="Stretch" 
-        HorizontalAlignment="Stretch">
-    <Window.DataContext>
-        <local:MainViewModel/>
-    </Window.DataContext>
+        HorizontalAlignment="Stretch" Width="600">
+    <!--<Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>-->
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="n = " VerticalAlignment="Center" FontSize="16" Margin="0,0,0,4"/>
-                <TextBox Width="30" Margin="5" MaxLength="3" Text="{Binding RowsCount, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Name="txtN" Width="30" Margin="5" MaxLength="3" Text="{Binding RowsCount, UpdateSourceTrigger=PropertyChanged}"/>
                 <TextBlock Text=" m = " VerticalAlignment="Center" FontSize="16" Margin="0,0,0,4"/>
-                <TextBox Width="30" Margin="5" MaxLength="3" Text="{Binding ColumnsCount, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Content="Применить" Margin="5" Command="{Binding SetSizeCommand}"/>
+                <TextBox Name="txtM" Width="30" Margin="5" MaxLength="3" Text="{Binding ColumnsCount, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Применить" Margin="5" Command="{Binding SetSizeCommand}" Click="ButtonExecute_Click"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <DataGrid Name="Data_A" Margin="5" Grid.Column="1" ItemsSource="{Binding Data}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
@@ -29,7 +29,7 @@
                         </ItemContainerTemplate>
                     </DataGrid.RowHeaderTemplate>
                 </DataGrid>
-                <TextBlock FontSize="42" VerticalAlignment="Center">× X = </TextBlock>
+                <TextBlock Name="txtbl1" FontSize="42" VerticalAlignment="Center">× X =</TextBlock>
                 <DataGrid Name="Data_B" Margin="5" Grid.Column="1" ItemsSource="{Binding Datab}" SelectionMode="Single" SelectionUnit="Cell" AlternationCount="9999" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserSortColumns="False">
                     <DataGrid.RowHeaderTemplate>
                         <ItemContainerTemplate>
@@ -39,9 +39,15 @@
                 </DataGrid>
             </StackPanel>
             <Button x:Name="ButtonCalculate" Height="30" Margin="10" Content="Найти решение СЛАУ (вектор X)" FontSize="20" Click="ButtonCalculate_Click"/>
-            <StackPanel Orientation="Horizontal">
-                
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Name="txtbl2" FontSize="42" VerticalAlignment="Center" HorizontalAlignment="Center">X = </TextBlock>
+                <ListView Name="Data_Psvd" ItemsSource="{Binding ItemSource_Psvd}" Height="80" Width="80">
+                    <ListView.View>
+                        <GridView  x:Name="GridWiew1"/>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
+                <TextBlock Name="txtbl3" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Норма невязки:</TextBlock>
         </StackPanel>
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
+using System.Data;
 
 namespace OptimLR1
 {
@@ -23,16 +24,16 @@ namespace OptimLR1
     public partial class MainWindow : Window
     {
         int N, M;
-        double[][] Table_A, Table_B, Table_psevdo, Table_X;
-
-        private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        Matrix<double> Table_A, Table_B, Table_psevdo, Table_X, Table_BB;
+        double Nevyazka;
+        MainViewModel DataX;
+        MainViewModel mainviewmodel = new MainViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
+            DataX = new MainViewModel();
+            DataContext = mainviewmodel;
 
             Matrix<double> K = DenseMatrix.OfArray(new double[,] {
             {2, 5, 7, 10, 0, 0},
@@ -44,22 +45,31 @@ namespace OptimLR1
             var I = Matrix<double>.Build;
             var c = I.DenseDiagonal(K.ColumnCount, K.ColumnCount, 1);
             var k = Grevil(K);
-            if ((K * k).Transpose() == K * k)
-            {
-                Console.WriteLine(1);
-            }
-            if ((k * K).Transpose() == k * K)
-            {
-                Console.WriteLine(2);
-            }
-            if (K * k * K == K)
-            {
-                Console.WriteLine(3);
-            }
-            if (k * K * k == k)
-            {
-                Console.WriteLine(4);
-            }
+            //if ((K * k).Transpose() == K * k)
+            //{
+            //    Console.WriteLine(1);
+            //}
+            //if ((k * K).Transpose() == k * K)
+            //{
+            //    Console.WriteLine(2);
+            //}
+            //if (K * k * K == K)
+            //{
+            //    Console.WriteLine(3);
+            //}
+            //if (k * K * k == k)
+            //{
+            //    Console.WriteLine(4);
+            //}
+            Data_A.Visibility = Visibility.Hidden;
+            Data_B.Visibility = Visibility.Hidden;
+            Data_Psvd.Visibility = Visibility.Hidden;
+            txtbl1.Visibility = Visibility.Hidden;
+            txtbl2.Visibility = Visibility.Hidden;
+            txtbl3.Visibility = Visibility.Hidden;
+            ButtonCalculate.Visibility = Visibility.Hidden;
+            Table_A = K;
+            Table_B = DenseMatrix.OfArray(new double[,] { { 1 }, { -5 }, { -2 }, { 9 } });
         }
 
         public Matrix<double> Grevil(Matrix<double> A)
@@ -114,7 +124,7 @@ namespace OptimLR1
             return A_obr;
         }
 
-        public bool any(Matrix<double> C)
+        public bool any(Matrix<double> C)// проверка на не 0
         {
             for (int i = 0; i < C.RowCount; ++i)
             {
@@ -138,6 +148,17 @@ namespace OptimLR1
             }
             return column;
         }
+
+        private void ButtonExecute_Click(object sender, RoutedEventArgs e)
+        {
+            Data_A.Visibility = Visibility.Visible;
+            Data_B.Visibility = Visibility.Visible;
+            txtbl1.Visibility = Visibility.Visible;
+            ButtonCalculate.Visibility = Visibility.Visible;
+            N = Convert.ToInt32(txtN.Text);
+            M = Convert.ToInt32(txtM.Text);
+        }
+
         public Matrix<double> srez_col(Matrix<double> A, int start, int end)
         {
             var matrix = Matrix<double>.Build;
@@ -176,14 +197,67 @@ namespace OptimLR1
             }
             return sum;
         }
-
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        
+        private double[,] DataToDouble(DataGrid _DG)
         {
-            WindowInput inp = new WindowInput();
-            inp.Show();
+            DataView Tbl = Data_A.ItemsSource as DataView;
+            double[,] Result = new double[Tbl.Table.Rows.Count, Tbl.Table.Columns.Count];
+            for (int i = 0; i < Tbl.Table.Rows.Count; i++)
+            {
+                for (int j = 0; j < Tbl.Table.Columns.Count; j++)
+                {
+                    Result[i,j] = Convert.ToDouble(Tbl[i].Row.ItemArray[j]);
+                }
+            }
+            return Result;
         }
 
+        private void AddDataToLW (Matrix<double> _matr)
+        {
+            double[,] _Dmatr = _matr.ToArray();
+            List<double[]> coll_res = new List<double[]>();
+            GridView gridView = new GridView();
+            gridView.Columns.Add(new GridViewColumn { Header = "n\\m", DisplayMemberBinding = new Binding(".[" + _Dmatr.GetLength(1).ToString() + "]") });
+            for (int i = 0; i < M; i++)
+                gridView.Columns.Add(new GridViewColumn { Header = i.ToString(), DisplayMemberBinding = new Binding(".[" + i.ToString() + "]") });
 
+            for (int i = 0; i < _Dmatr.GetLength(0); i++)
+            {
+                double[] str = new double[_Dmatr.GetLength(1)];
+                //var rectResult = _Dmatr.Cast<object>().ToArray();
+                for (int j = 0; j < _Dmatr.GetLength(1); j++)
+                {
+                    str[j] = _Dmatr[i, j];
+                }
+                coll_res.Add(str);
+            }
+            for (int i = 0; i < N; i++)//для отображения левых индексов
+               coll_res[i].Append(i);
+
+            mainviewmodel.ItemSource_Psvd = coll_res;
+            //Data_Psvd.ItemsSource = coll_res;
+            //Data_Psvd.ItemsSource = coll_res;
+            //mainviewmodel.gridView = gridView;
+            GridWiew1 = gridView;
+        }
+
+        private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            Data_Psvd.Visibility = Visibility.Visible;
+            txtbl2.Visibility = Visibility.Visible;
+            txtbl3.Visibility = Visibility.Visible;
+
+            //Table_A = DenseMatrix.OfArray(DataToDouble(Data_A));
+            //Table_B = DenseMatrix.OfArray(DataToDouble(Data_B));
+
+            Table_psevdo = Grevil(Table_A);
+            Table_X = Table_psevdo * Table_B;
+            Table_BB = Table_A * Table_X;
+            Nevyazka = sum(square(Table_B - Table_BB));
+
+            AddDataToLW(Table_X);
+            txtbl3.Text += " " + Nevyazka.ToString();
+        }
 
         public void Get_NM(int _N, int _M)
         {

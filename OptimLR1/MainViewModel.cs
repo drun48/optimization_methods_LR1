@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Data;
+using System.Windows.Controls;
 
 namespace OptimLR1
 {
@@ -12,6 +13,8 @@ namespace OptimLR1
     {
         private DataTable _data;
         private DataTable _datab;
+        private List<double[]> _ItemSource_Psvd;
+        private GridView _gridView;
         private ICommand _addRowCommand;
         private ICommand _addColumnCommand;
         private ICommand _removeRowCommand;
@@ -38,6 +41,24 @@ namespace OptimLR1
             set
             {
                 _datab = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<double[]> ItemSource_Psvd
+        {
+            get => _ItemSource_Psvd;
+            set
+            {
+                _ItemSource_Psvd = value;
+                OnPropertyChanged();
+            }
+        }
+        public GridView gridView
+        {
+            get => _gridView;
+            set
+            {
+                _gridView = value;
                 OnPropertyChanged();
             }
         }
