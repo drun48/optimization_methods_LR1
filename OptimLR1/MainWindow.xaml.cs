@@ -200,7 +200,7 @@ namespace OptimLR1
         
         private double[,] DataToDouble(DataGrid _DG)
         {
-            DataView Tbl = Data_A.ItemsSource as DataView;
+            DataView Tbl = _DG.ItemsSource as DataView;
             double[,] Result = new double[Tbl.Table.Rows.Count, Tbl.Table.Columns.Count];
             for (int i = 0; i < Tbl.Table.Rows.Count; i++)
             {
@@ -243,11 +243,12 @@ namespace OptimLR1
 
         private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
         {
+            var test = DataToDouble(Data_B);
             txtbl2.Visibility = Visibility.Visible;
             txtbl3.Visibility = Visibility.Visible;
 
-            //Table_A = DenseMatrix.OfArray(DataToDouble(Data_A));
-            //Table_B = DenseMatrix.OfArray(DataToDouble(Data_B));
+            Table_A = DenseMatrix.OfArray(DataToDouble(Data_A));
+            Table_B = DenseMatrix.OfArray(DataToDouble(Data_B));
 
             Table_psevdo = Grevil(Table_A);
             Table_X = Table_psevdo * Table_B;
