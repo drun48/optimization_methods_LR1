@@ -26,13 +26,11 @@ namespace OptimLR1
         int N, M;
         Matrix<double> Table_A, Table_B, Table_psevdo, Table_X, Table_BB;
         double Nevyazka;
-        MainViewModel DataX;
         MainViewModel mainviewmodel = new MainViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
-            DataX = new MainViewModel();
             DataContext = mainviewmodel;
 
             Matrix<double> K = DenseMatrix.OfArray(new double[,] {
@@ -67,6 +65,7 @@ namespace OptimLR1
             txtbl1.Visibility = Visibility.Hidden;
             txtbl2.Visibility = Visibility.Hidden;
             txtbl3.Visibility = Visibility.Hidden;
+            LW_X.Visibility = Visibility.Hidden;
             ButtonCalculate.Visibility = Visibility.Hidden;
             Table_A = K;
             Table_B = DenseMatrix.OfArray(new double[,] { { 1 }, { -5 }, { -2 }, { 9 } });
@@ -217,13 +216,13 @@ namespace OptimLR1
             double[,] _Dmatr = _matr.ToArray();
             List<double[]> coll_res = new List<double[]>();
             GridView gridView = new GridView();
-            gridView.Columns.Add(new GridViewColumn { Header = "n\\m", DisplayMemberBinding = new Binding(".[" + _Dmatr.GetLength(1).ToString() + "]") });
-            for (int i = 0; i < M; i++)
-                gridView.Columns.Add(new GridViewColumn { Header = i.ToString(), DisplayMemberBinding = new Binding(".[" + i.ToString() + "]") });
+            gridView.Columns.Add(new GridViewColumn { Header = "n\\m", DisplayMemberBinding = new Binding(".[" + _Dmatr.GetLength(1) + "]") });
+            for (int i = 0; i < _Dmatr.GetLength(1); i++)
+                gridView.Columns.Add(new GridViewColumn { Header = i.ToString(), DisplayMemberBinding = new Binding(".[" + i + "]") });
 
             for (int i = 0; i < _Dmatr.GetLength(0); i++)
             {
-                double[] str = new double[_Dmatr.GetLength(1)];
+                double[] str = new double[_Dmatr.GetLength(1)+1];
                 //var rectResult = _Dmatr.Cast<object>().ToArray();
                 for (int j = 0; j < _Dmatr.GetLength(1); j++)
                 {
@@ -231,19 +230,16 @@ namespace OptimLR1
                 }
                 coll_res.Add(str);
             }
-            for (int i = 0; i < N; i++)//для отображения левых индексов
-               coll_res[i].Append(i);
+            for (int i = 0; i < M; i++)//для отображения левых индексов
+               coll_res[i][_Dmatr.GetLength(1)] = i;
 
-            mainviewmodel.ItemSource_Psvd = coll_res;
-            //Data_Psvd.ItemsSource = coll_res;
-            //Data_Psvd.ItemsSource = coll_res;
-            //mainviewmodel.gridView = gridView;
-            //GridWiew1 = gridView;
+            mainviewmodel.ItemSource_X = coll_res;
+            GridWiew1 = gridView;
         }
 
         private void ButtonCalculate_Click(object sender, RoutedEventArgs e)
         {
-            var test = DataToDouble(Data_B);
+            LW_X.Visibility = Visibility.Visible;
             txtbl2.Visibility = Visibility.Visible;
             txtbl3.Visibility = Visibility.Visible;
 
@@ -255,21 +251,21 @@ namespace OptimLR1
             Table_BB = Table_A * Table_X;
             Nevyazka = sum(square(Table_B - Table_BB));
 
-            for (int i = 0; i < Table_X.RowCount; ++i)
-            {
-                StackPanel stack = new StackPanel();
-                stack.Orientation = Orientation.Horizontal;
-                for(int j = 0; j < Table_X.ColumnCount; ++j)
-                {
-                    TextBlock text = new TextBlock();
-                    text.Text = Table_X[i, j].ToString();
-                    stack.Children.Add(text);
-                }
-                this.Table.Children.Add(stack);
-            }
+            //for (int i = 0; i < Table_X.RowCount; ++i)
+            //{
+            //    StackPanel stack = new StackPanel();
+            //    stack.Orientation = Orientation.Horizontal;
+            //    for(int j = 0; j < Table_X.ColumnCount; ++j)
+            //    {
+            //        TextBlock text = new TextBlock();
+            //        text.Text = Table_X[i, j].ToString();
+            //        stack.Children.Add(text);
+            //    }
+            //    this.Table.Children.Add(stack);
+            //}
 
             AddDataToLW(Table_X);
-            txtbl3.Text += " " + Nevyazka.ToString();
+            txtbl3.Text = "Норма невязки: " + Nevyazka.ToString();
         }
 
         public void Get_NM(int _N, int _M)

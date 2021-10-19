@@ -41,8 +41,15 @@
             <Button x:Name="ButtonCalculate" Height="30" Margin="10" Content="Найти решение СЛАУ (вектор X)" FontSize="20" Click="ButtonCalculate_Click"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Name="txtbl2" FontSize="42" VerticalAlignment="Center" HorizontalAlignment="Center">X =</TextBlock>
-                <StackPanel Orientation="Vertical" Name="Table" Margin="15px" HorizontalAlignment="Center">
-                </StackPanel>
+                <ListView Name="LW_X" ItemsSource="{Binding ItemSource_X}">
+                    <ListView.View>
+                        <GridView  x:Name="GridWiew1">
+                            <GridViewColumn DisplayMemberBinding="{Binding [1]}"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding [0]}">0</GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Orientation="Vertical" Name="Table" Margin="15px" HorizontalAlignment="Center"/>
             </StackPanel>
                 <TextBlock Name="txtbl3" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Норма невязки:</TextBlock>
         </StackPanel>

@@ -26,7 +26,6 @@ C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\De
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\UserControl_Cell.g.cs
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\WindowInput.g.cs
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\App.g.cs
-C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1_MarkupCompile.cache
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\OptimLR1_MarkupCompile.lref
 C:\Users\Егор\source\repos\gfawergy\optimization_methods_LR1\OptimLR1\obj\Debug\MainWindow.baml

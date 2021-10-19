@@ -13,7 +13,7 @@ namespace OptimLR1
     {
         private DataTable _data;
         private DataTable _datab;
-        private List<double[]> _ItemSource_Psvd;
+        private List<double[]> _ItemSource_X;
         private GridView _gridView;
         private ICommand _addRowCommand;
         private ICommand _addColumnCommand;
@@ -44,12 +44,12 @@ namespace OptimLR1
                 OnPropertyChanged();
             }
         }
-        public List<double[]> ItemSource_Psvd
+        public List<double[]> ItemSource_X
         {
-            get => _ItemSource_Psvd;
+            get => _ItemSource_X;
             set
             {
-                _ItemSource_Psvd = value;
+                _ItemSource_X = value;
                 OnPropertyChanged();
             }
         }
@@ -62,7 +62,7 @@ namespace OptimLR1
                 OnPropertyChanged();
             }
         }
-        public int RowsCount // тексбокс Строки привязан сюда
+        public int RowsCount // текстбокс Строки привязан сюда
         {
             get => _rowsCount;
             set
